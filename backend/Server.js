@@ -6,12 +6,21 @@ const path = require("path");
 const app = express();
 const PORT = process.env.PORT || 5001;
 
+const cors = require("cors");
+app.use(cors());
+
 app.use(bodyParser.json());
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
+const careerRoutes = require("./routes/careerRoutes");
+const employeeRoutes = require("./routes/employeeRoutes");
 const leaveRoutes = require("./routes/leaveRoutes");
+const userRoutes = require("./routes/userRoutes");
+
+app.use("/api/careers", careerRoutes);
+app.use("/api/employees", employeeRoutes);
 app.use("/api/leaves", leaveRoutes);
-app.use("/api/employee", require("./routes/employeeRoutes"));
+app.use("/api/users", userRoutes);
 
 mongoose
   .connect(

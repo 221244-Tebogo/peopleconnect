@@ -21,3 +21,7 @@ const CareerSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+});
+
+// Export the schema as a Mongoose model
+module.exports = mongoose.model("Career", CareerSchema);

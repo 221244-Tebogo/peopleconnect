@@ -9,7 +9,7 @@ const HrCareer = () => {
     title: "",
     department: "",
     description: "",
-    duration: "", // New field for posting duration
+    duration: "",
   });
   const [editPosition, setEditPosition] = useState(null);
   const [file, setFile] = useState(null);
@@ -27,7 +27,9 @@ const HrCareer = () => {
   useEffect(() => {
     const fetchPositions = async () => {
       try {
-        const response = await axios.get("/api/hr/careers");
+        const response = await axios.get("/api/hr/careers", {
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        });
         setPositions(response.data);
       } catch (error) {
         console.error("Error fetching positions:", error);
@@ -51,43 +53,57 @@ const HrCareer = () => {
     formData.append("title", newPosition.title);
     formData.append("department", newPosition.department);
     formData.append("description", newPosition.description);
-    formData.append("duration", newPosition.duration); // Add duration to form data
+    formData.append("duration", newPosition.duration);
     if (file) formData.append("file", file);
 
     try {
+      let response;
       if (editPosition) {
-        const response = await axios.put(
-          `/api/hr/careers/${editPosition.id}`,
+        response = await axios.put(
+          `http://localhost:5000/api/careers/${editPosition._id}`,
           formData,
           {
-            headers: { Authorization: localStorage.getItem("token") },
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
           }
         );
         setPositions(
           positions.map((pos) =>
-            pos.id === response.data.id ? response.data : pos
+            pos._id === response.data._id ? response.data : pos
           )
         );
         alert("Position updated successfully!");
       } else {
-        const response = await axios.post("/api/hr/careers", formData, {
-          headers: { Authorization: localStorage.getItem("token") },
-        });
+        response = await axios.post(
+          "http://localhost:5001/api/careers",
+          formData,
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
+        );
         setPositions([...positions, response.data]);
         alert("Position created successfully!");
       }
-      setNewPosition({
-        title: "",
-        department: "",
-        description: "",
-        duration: "",
-      });
-      setFile(null);
-      setEditPosition(null);
-      setShowModal(false);
+      resetForm();
     } catch (error) {
       console.error("Error creating/updating position:", error);
+      alert("There was an error processing your request. Please try again.");
     }
+  };
+
+  const resetForm = () => {
+    setNewPosition({
+      title: "",
+      department: "",
+      description: "",
+      duration: "",
+    });
+    setFile(null);
+    setEditPosition(null);
+    setShowModal(false);
   };
 
   const handleEdit = (position) => {
@@ -99,12 +115,13 @@ const HrCareer = () => {
   const handleDelete = async (id) => {
     try {
       await axios.delete(`/api/hr/careers/${id}`, {
-        headers: { Authorization: localStorage.getItem("token") },
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       });
-      setPositions(positions.filter((position) => position.id !== id));
+      setPositions(positions.filter((position) => position._id !== id));
       alert("Position deleted successfully!");
     } catch (error) {
       console.error("Error deleting position:", error);
+      alert("Unable to delete the position. Please try again.");
     }
   };
 
@@ -124,14 +141,8 @@ const HrCareer = () => {
                 <button
                   className="btn btn-success"
                   onClick={() => {
-                    setShowModal(true);
-                    setEditPosition(null);
-                    setNewPosition({
-                      title: "",
-                      department: "",
-                      description: "",
-                      duration: "",
-                    });
+                    resetForm(); // Reset the form
+                    setShowModal(true); // Show the modal
                   }}
                 >
                   <i className="fa fa-plus"></i>
@@ -141,9 +152,13 @@ const HrCareer = () => {
             </div>
           </div>
 
+          {/* Modal for adding/editing position */}
           {showModal && (
-            <div className="modal-overlay">
-              <div className="modal-content">
+            <div className="modal-overlay" onClick={() => setShowModal(false)}>
+              <div
+                className="modal-content"
+                onClick={(e) => e.stopPropagation()}
+              >
                 <h2>{editPosition ? "Edit Position" : "Add New Position"}</h2>
                 <form onSubmit={handleCreateOrUpdate}>
                   <div className="mb-3">
@@ -237,7 +252,7 @@ const HrCareer = () => {
             </thead>
             <tbody>
               {positions.map((position) => (
-                <tr key={position.id}>
+                <tr key={position._id}>
                   <td>{position.title}</td>
                   <td>{position.department}</td>
                   <td>{position.description}</td>
@@ -250,7 +265,7 @@ const HrCareer = () => {
                       <i className="fa fa-pencil"></i> Edit
                     </button>
                     <button
-                      onClick={() => handleDelete(position.id)}
+                      onClick={() => handleDelete(position._id)}
                       className="btn btn-danger btn-sm"
                     >
                       <i className="fa fa-trash"></i> Delete

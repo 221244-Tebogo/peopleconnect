@@ -1,10 +1,9 @@
 const mongoose = require("mongoose");
-const SickLeave = require("../models/SickLeave");
 
 const SickLeaveSchema = new mongoose.Schema({
   employee: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
+    ref: "Employee", // Ensure this aligns with the actual name of your User model
     required: true,
   },
   startDate: {
