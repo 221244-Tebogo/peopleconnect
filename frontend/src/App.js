@@ -24,6 +24,7 @@ import CreateUser from "./pages/hr/CreateUser";
 import AssignTraining from "./pages/hr/AssignTraining";
 import EmployeeList from "./pages/hr/EmployeeList";
 import Logout from "./auth/Logout";
+import ManageLeave from "./pages/hr/ManageLeave"; // Import ManageLeave component
 import "./App.css";
 
 const App = () => {
@@ -36,10 +37,8 @@ const App = () => {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/logout" element={<Logout />} />
-
           {/* Employee Routes */}
           <Route path="/employees/dashboard" element={<EmployeeDashboard />} />
-
           {/* Manager Routes */}
           <Route path="/manager/dashboard" element={<ManagerDashboard />} />
           <Route
@@ -52,7 +51,6 @@ const App = () => {
           />
           <Route path="/manager/profile" element={<ManagerProfile />} />
           <Route path="/manager/career" element={<ManagerCareer />} />
-
           {/* HR Routes */}
           <Route path="/hr/HRMainDashboard" element={<HRMainDashboard />} />
           <Route
@@ -94,7 +92,11 @@ const App = () => {
             path="/hr/HRMainDashboard/employeelist"
             element={<EmployeeList />}
           />
-
+          <Route
+            path="/hr/HRMainDashboard/manageleave"
+            element={<ManageLeave />}
+          />{" "}
+          {/* Added route for ManageLeave */}
           {/* 404 Route */}
           <Route path="*" element={<div>404 Page Not Found</div>} />
         </Routes>

@@ -19,17 +19,11 @@ const HRSidebar = () => {
         <Link to="/hr/HRMainDashboard" className="link">
           Home
         </Link>
-        <Link to="/hr/HRMainDashboard/leaves" className="link">
+        <Link to="/hr/HRMainDashboard/manageleave" className="link">
           Manage Leave Requests
-        </Link>
-        <Link to="/hr/HRMainDashboard/scheduling" className="link">
-          Scheduling
         </Link>
         <Link to="/hr/HRMainDashboard/reporting" className="link">
           Reports
-        </Link>
-        <Link to="/hr/HRMainDashboard/recruitment" className="link">
-          Recruitment
         </Link>
         <Link to="/hr/HRMainDashboard/hrtraining" className="link">
           Training
@@ -42,7 +36,6 @@ const HRSidebar = () => {
         </Link>
         <Link to="/hr/HRMainDashboard/employeelist" className="link">
           {" "}
-          {/* Add Employee List link */}
           Employee List
         </Link>
         <button onClick={handleLogout} className="logout-btn">

@@ -325,3 +325,18 @@ body {
 .form-container .session-container input[type="time"]:last-child {
   margin-right: 0;
 }
+
+.form-container {
+  margin-top: 20px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-control {
+  width: 100%;
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #ced4da;
+}

@@ -3,7 +3,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-const AssignTrainingModal = ({ onClose, onSave, trainingToEdit }) => {
+const AssignTraining = ({ onClose, onSave, trainingToEdit }) => {
   const [taskData, setTaskData] = useState({
     employee: "",
     trainingTask: "",
@@ -153,4 +153,4 @@ const AssignTrainingModal = ({ onClose, onSave, trainingToEdit }) => {
   );
 };
 
-export default AssignTrainingModal;
+export default AssignTraining;

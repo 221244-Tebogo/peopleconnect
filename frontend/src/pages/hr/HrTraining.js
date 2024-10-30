@@ -1,29 +1,13 @@
 import React, { useState } from "react";
 import HRSidebar from "../../components/sidebar/HRSidebar";
+import AssignTraining from "./AssignTraining";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./HRAdminDashboard.css";
 
 const HRTraining = () => {
-  const [assignedTrainings, setAssignedTrainings] = useState([
-    {
-      id: 1,
-      user: "John Doe",
-      training: "Customer Service",
-      date: "2024-11-10",
-    },
-    {
-      id: 2,
-      user: "Jane Smith",
-      training: "Security Training",
-      date: "2024-11-12",
-    },
-  ]);
-
-  const [availableTrainings] = useState([
-    "Customer Service",
-    "Security Training",
-    "Casino Regulations",
-    "Emergency Procedures",
-    "Slot Machine Operations",
-  ]);
+  const [assignedTrainings, setAssignedTrainings] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+  const [trainingToEdit, setTrainingToEdit] = useState(null);
 
   const removeTraining = (id) => {
     setAssignedTrainings((prevTrainings) =>
@@ -31,43 +15,104 @@ const HRTraining = () => {
     );
   };
 
+  const handleSaveTraining = (newTraining) => {
+    if (trainingToEdit) {
+      setAssignedTrainings((prevTrainings) =>
+        prevTrainings.map((training) =>
+          training.id === trainingToEdit.id
+            ? { ...trainingToEdit, ...newTraining }
+            : training
+        )
+      );
+    } else {
+      setAssignedTrainings((prevTrainings) => [
+        ...prevTrainings,
+        { id: prevTrainings.length + 1, ...newTraining },
+      ]);
+    }
+    setShowModal(false);
+    setTrainingToEdit(null);
+  };
+
+  const handleEditTraining = (training) => {
+    setTrainingToEdit(training);
+    setShowModal(true);
+  };
+
   return (
     <div className="app-container">
       <HRSidebar />
-      <div className="main-content">
-        <h2>Training Management</h2>
-        <p>Assign and manage training programs for employees and managers.</p>
+      <div className="container">
+        <div className="table-wrapper">
+          <div className="table-title">
+            <div className="row align-items-center">
+              <div className="col-sm-6">
+                <h2>
+                  Manage <b>Trainings</b>
+                </h2>
+              </div>
+              <div className="col-sm-6 d-flex justify-content-end gap-2">
+                <button
+                  className="btn btn-success"
+                  onClick={() => {
+                    setShowModal(true);
+                    setTrainingToEdit(null);
+                  }}
+                >
+                  <i className="fa fa-plus"></i>
+                  <span>Assign New Training</span>
+                </button>
+              </div>
+            </div>
+          </div>
 
-        <h3>Available Training Programs</h3>
-        <ul>
-          {availableTrainings.map((training, index) => (
-            <li key={index}>{training}</li>
-          ))}
-        </ul>
+          {showModal && (
+            <AssignTraining
+              onClose={() => setShowModal(false)}
+              onSave={handleSaveTraining}
+              trainingToEdit={trainingToEdit}
+            />
+          )}
 
-        <h3>Assigned Trainings</h3>
-        <ul>
-          {assignedTrainings.map((training) => (
-            <li key={training.id}>
-              {training.user} - {training.training} on {training.date}
-              <button
-                onClick={() => removeTraining(training.id)}
-                className="btn btn-secondary"
-              >
-                Remove
-              </button>
-            </li>
-          ))}
-        </ul>
-
-        <button
-          className="btn btn-primary"
-          onClick={() =>
-            (window.location.href = "/hr/HRMainDashboard/assigntraining")
-          }
-        >
-          Assign New Training
-        </button>
+          <table className="table table-striped table-hover">
+            <thead>
+              <tr>
+                <th>Employee</th>
+                <th>Training Program</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {assignedTrainings.map((training) => (
+                <tr key={training.id}>
+                  <td>{training.employee}</td>
+                  <td>{training.trainingTask}</td>
+                  <td>{training.sessions[0]?.date || "N/A"}</td>
+                  <td>
+                    {training.sessions[training.sessions.length - 1]?.date ||
+                      "N/A"}
+                  </td>
+                  <td>
+                    <button
+                      onClick={() => handleEditTraining(training)}
+                      className="btn btn-warning btn-sm me-2"
+                    >
+                      <i className="fa fa-pencil"></i> Edit
+                    </button>
+                    <button
+                      onClick={() => removeTraining(training.id)}
+                      className="btn btn-danger btn-sm"
+                    >
+                      <i className="fa fa-trash"></i> Remove
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );

@@ -53,7 +53,7 @@ const EmployeeList = () => {
                 </button>
                 <button
                   className="btn btn-danger"
-                  onClick={() => setEmployees([])} // Dummy delete functionality
+                  onClick={() => setEmployees([])}
                 >
                   <i className="fa fa-trash"></i> <span>Delete</span>
                 </button>
