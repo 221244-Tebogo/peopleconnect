@@ -22,7 +22,7 @@ const EmployeeSidebar = () => {
         <Link to="/employees/tasks" className="link">
           My Tasks
         </Link>
-        <Link to="/employees/leaves" className="link">
+        <Link to="/employees/leave-management" className="link">
           Leave Management
         </Link>
         <Link to="/employees/schedule" className="link">

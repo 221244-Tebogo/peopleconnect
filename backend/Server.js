@@ -11,11 +11,11 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 const leaveRoutes = require("./routes/leaveRoutes");
 app.use("/api/leaves", leaveRoutes);
-app.use("/api/employees", require("./routes/employeeRoutes"));
+app.use("/api/employee", require("./routes/employeeRoutes"));
 
 mongoose
   .connect(
-    "mongodb+srv://221244:<db_password>@hr-connect.9nbao.mongodb.net/hr-connect?retryWrites=true&w=majority",
+    "mongodb+srv://221244:VLCzVYr1xhEDd4MR@hr-connect.9nbao.mongodb.net/hr-connect?retryWrites=true&w=majority",
     {
       useNewUrlParser: true,
       useUnifiedTopology: true,

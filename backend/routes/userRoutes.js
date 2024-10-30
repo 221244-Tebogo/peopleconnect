@@ -4,7 +4,6 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 const router = express.Router();
 
-// Register new user
 router.post("/register", async (req, res) => {
   const { name, email, password } = req.body;
   try {
@@ -22,7 +21,6 @@ router.post("/register", async (req, res) => {
   }
 });
 
-// Login user
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
   try {
@@ -42,7 +40,6 @@ router.post("/login", async (req, res) => {
   }
 });
 
-// Get user info
 router.get("/me", authenticateToken, async (req, res) => {
   try {
     const user = await User.findById(req.user.userId).select("-password");
@@ -52,7 +49,6 @@ router.get("/me", authenticateToken, async (req, res) => {
   }
 });
 
-// Update user info (example: email)
 router.put("/me", authenticateToken, async (req, res) => {
   try {
     const { email } = req.body;
@@ -67,7 +63,6 @@ router.put("/me", authenticateToken, async (req, res) => {
   }
 });
 
-// Delete user
 router.delete("/me", authenticateToken, async (req, res) => {
   try {
     await User.findByIdAndDelete(req.user.userId);
@@ -77,7 +72,6 @@ router.delete("/me", authenticateToken, async (req, res) => {
   }
 });
 
-// Middleware to verify token
 function authenticateToken(req, res, next) {
   const token = req.header("Authorization").replace("Bearer ", "");
   if (!token) {

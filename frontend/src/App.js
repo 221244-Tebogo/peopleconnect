@@ -4,7 +4,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import LandingPage from "./pages/LandingPage";
 import LoginPage from "./auth/Login";
 import RegisterPage from "./auth/Register";
-import EmployeeDashboard from "./pages/employees/EmployeeDashboard";
 import ManagerDashboard from "./pages/manager/ManagerDashboard";
 import ManagerLeaveRequests from "./pages/manager/ManagerLeaveRequests";
 import ManagerShiftSchedule from "./pages/manager/ManagerShiftSchedule";
@@ -24,7 +23,9 @@ import CreateUser from "./pages/hr/CreateUser";
 import AssignTraining from "./pages/hr/AssignTraining";
 import EmployeeList from "./pages/hr/EmployeeList";
 import Logout from "./auth/Logout";
-import ManageLeave from "./pages/hr/ManageLeave"; // Import ManageLeave component
+import ManageLeave from "./pages/hr/ManageLeave";
+import Dashboard from "./pages/employees/Dashboard";
+
 import "./App.css";
 
 const App = () => {
@@ -38,7 +39,7 @@ const App = () => {
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/logout" element={<Logout />} />
           {/* Employee Routes */}
-          <Route path="/employees/dashboard" element={<EmployeeDashboard />} />
+          <Route path="/employees/dashboard" element={<Dashboard />} />{" "}
           {/* Manager Routes */}
           <Route path="/manager/dashboard" element={<ManagerDashboard />} />
           <Route

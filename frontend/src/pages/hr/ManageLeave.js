@@ -8,19 +8,23 @@ import "./HRAdminDashboard.css";
 const ManageLeave = () => {
   const [leaveRequests, setLeaveRequests] = useState([]);
   const [leaveType, setLeaveType] = useState("");
+  const [leaveDuration, setLeaveDuration] = useState("Full Day"); // New: Full Day or Half Day
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [sickNote, setSickNote] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [employeeType, setEmployeeType] = useState("");
   const [showLeaveModal, setShowLeaveModal] = useState(false);
-  const [showActionModal, setShowActionModal] = useState(false);
+  const [showApprovalModal, setShowApprovalModal] = useState(false);
   const [selectedRequest, setSelectedRequest] = useState(null);
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     const fetchLeaveRequests = async () => {
       try {
-        const response = await axios.get("/api/hr/leave-requests");
+        const response = await axios.get(
+          `${process.env.REACT_APP_API_BASE_URL}/hr/leave-requests`
+        );
         setLeaveRequests(response.data);
       } catch (error) {
         console.error("Error fetching leave requests:", error);
@@ -32,6 +36,11 @@ const ManageLeave = () => {
   const calculateLeaveDays = () => {
     if (!startDate || !endDate) return 0;
     const daysBetween = (endDate - startDate) / (1000 * 3600 * 24);
+
+    if (leaveDuration === "Half Day") {
+      return 0.5; // If half-day is selected, return 0.5 days
+    }
+
     if (employeeType === "office") {
       let days = 0;
       for (let i = 0; i <= daysBetween; i++) {
@@ -47,52 +56,53 @@ const ManageLeave = () => {
   const handleLeaveRequest = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
+
+    if (endDate < startDate) {
+      setErrorMessage("End date cannot be before start date.");
+      setIsSubmitting(false);
+      return;
+    } else {
+      setErrorMessage("");
+    }
+
     const formData = new FormData();
     formData.append("leaveType", leaveType);
+    formData.append("leaveDuration", leaveDuration); // Add leave duration
     formData.append("startDate", startDate);
     formData.append("endDate", endDate);
     formData.append("employeeType", employeeType);
+
     if (leaveType === "Sick Leave" && sickNote) {
       formData.append("sickNote", sickNote);
     }
+
     try {
-      await axios.post("/api/hr/leave-request", formData, {
-        headers: {
-          Authorization: localStorage.getItem("token"),
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      await axios.post(
+        `${process.env.REACT_APP_API_BASE_URL}/hr/leave-request`,
+        formData,
+        {
+          headers: {
+            Authorization: localStorage.getItem("token"),
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
       alert("Leave request submitted successfully!");
       setLeaveRequests([
         ...leaveRequests,
-        { leaveType, startDate, endDate, employeeType },
+        { leaveType, startDate, endDate, employeeType, leaveDuration },
       ]);
+      setShowLeaveModal(false);
       setLeaveType("");
+      setLeaveDuration("Full Day");
       setStartDate(null);
       setEndDate(null);
       setSickNote(null);
-      setShowLeaveModal(false);
     } catch (error) {
       console.error("Error submitting leave request:", error);
       alert("Failed to submit leave request");
     } finally {
       setIsSubmitting(false);
-    }
-  };
-
-  const updateLeaveStatus = async (id, status) => {
-    try {
-      await axios.patch(`/api/hr/leave-request/${id}`, { status });
-      setLeaveRequests((prevRequests) =>
-        prevRequests.map((request) =>
-          request.id === id ? { ...request, status } : request
-        )
-      );
-      setShowActionModal(false);
-      alert(`Leave status updated to ${status}`);
-    } catch (error) {
-      console.error(`Error updating leave status: ${status}`, error);
-      alert(`Failed to update leave status to ${status}`);
     }
   };
 
@@ -110,16 +120,16 @@ const ManageLeave = () => {
               </div>
               <div className="col-sm-6 d-flex justify-content-end gap-2">
                 <button
-                  className="btn btn-success"
+                  className="btn btn-primary"
                   onClick={() => setShowLeaveModal(true)}
                 >
-                  <i className="fa fa-plus"></i> Apply for Leave
+                  Apply for Leave
                 </button>
               </div>
             </div>
           </div>
 
-          {/* Leave Request Modal */}
+          {/* Apply for Leave Modal */}
           {showLeaveModal && (
             <div className="modal-overlay">
               <div className="modal-content">
@@ -139,6 +149,7 @@ const ManageLeave = () => {
                       </option>
                     </select>
                   </div>
+
                   <div className="form-group">
                     <label>Leave Type</label>
                     <select
@@ -153,24 +164,49 @@ const ManageLeave = () => {
                       <option value="Unpaid Leave">Unpaid Leave</option>
                     </select>
                   </div>
+
+                  <div className="form-group">
+                    <label>Leave Duration</label>
+                    <select
+                      value={leaveDuration}
+                      onChange={(e) => setLeaveDuration(e.target.value)}
+                      required
+                    >
+                      <option value="Full Day">Full Day</option>
+                      <option value="Half Day">Half Day</option>
+                    </select>
+                  </div>
+
                   <div className="form-group">
                     <label>Start Date</label>
                     <DatePicker
                       selected={startDate}
                       onChange={(date) => setStartDate(date)}
-                      dateFormat="Pp"
+                      showTimeSelect={leaveDuration === "Half Day"} // Show time select for half-day
+                      timeFormat="HH:mm"
+                      dateFormat={leaveDuration === "Half Day" ? "Pp" : "P"}
                       required
                     />
                   </div>
+
                   <div className="form-group">
                     <label>End Date</label>
                     <DatePicker
                       selected={endDate}
                       onChange={(date) => setEndDate(date)}
-                      dateFormat="Pp"
+                      showTimeSelect={leaveDuration === "Half Day"} // Show time select for half-day
+                      timeFormat="HH:mm"
+                      dateFormat={leaveDuration === "Half Day" ? "Pp" : "P"}
                       required
                     />
                   </div>
+
+                  {errorMessage && (
+                    <p style={{ color: "red", fontWeight: "bold" }}>
+                      {errorMessage}
+                    </p>
+                  )}
+
                   {leaveType === "Sick Leave" && (
                     <div className="form-group">
                       <label>Sick Note</label>
@@ -181,100 +217,31 @@ const ManageLeave = () => {
                       />
                     </div>
                   )}
+
                   <button
                     type="submit"
-                    className="btn btn-success"
+                    className="submit-button"
                     disabled={isSubmitting}
                   >
                     {isSubmitting ? "Submitting..." : "Submit Leave Request"}
                   </button>
                   <button
                     type="button"
-                    className="btn btn-secondary"
+                    className="btn btn-secondary mt-2"
                     onClick={() => setShowLeaveModal(false)}
                   >
                     Cancel
                   </button>
+                  <p>Total Leave Days: {calculateLeaveDays()}</p>
                 </form>
-                <p>Total Leave Days: {calculateLeaveDays()}</p>
               </div>
             </div>
           )}
 
           <h3 className="mt-5">All Leave Requests</h3>
-          <table className="table table-striped table-hover">
-            <thead>
-              <tr>
-                <th>Employee</th>
-                <th>Leave Type</th>
-                <th>Start Date</th>
-                <th>End Date</th>
-                <th>Status</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {leaveRequests.map((request) => (
-                <tr key={request.id}>
-                  <td>{request.employeeName}</td>
-                  <td>{request.leaveType}</td>
-                  <td>{request.startDate}</td>
-                  <td>{request.endDate}</td>
-                  <td>{request.status}</td>
-                  <td>
-                    <button
-                      onClick={() => {
-                        setSelectedRequest(request);
-                        setShowActionModal(true);
-                      }}
-                      className="btn btn-warning btn-sm"
-                    >
-                      Take Action
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          {/* Leave requests table here */}
         </div>
       </div>
-
-      {/* Approve/Reject Modal */}
-      {showActionModal && selectedRequest && (
-        <div className="modal-overlay">
-          <div className="modal-content">
-            <h2>Take Action on Leave Request</h2>
-            <p>Leave Type: {selectedRequest.leaveType}</p>
-            <p>Start Date: {selectedRequest.startDate}</p>
-            <p>End Date: {selectedRequest.endDate}</p>
-            <p>Status: {selectedRequest.status}</p>
-            <div className="modal-actions">
-              <button
-                onClick={() =>
-                  updateLeaveStatus(selectedRequest.id, "Approved")
-                }
-                className="btn btn-success"
-              >
-                Approve
-              </button>
-              <button
-                onClick={() =>
-                  updateLeaveStatus(selectedRequest.id, "Rejected")
-                }
-                className="btn btn-danger"
-              >
-                Reject
-              </button>
-              <button
-                className="btn btn-secondary"
-                onClick={() => setShowActionModal(false)}
-              >
-                Cancel
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 };
