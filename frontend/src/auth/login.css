@@ -1,0 +1,35 @@
+/* Logo positioning */
+.logo-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.onboarding-logo {
+    width: 150px;
+    height: auto;
+}
+
+/* Form container styling */
+.login-container {
+    background: #ffffff;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    margin: auto;
+    text-align: center;
+}
+
+.login-container h2 {
+    font-size: 24px;
+    color: #0F3F62;
+    margin-bottom: 20px;
+}
+
+/* Error message styling */
+.error {
+    color: #ff4b2b;
+    font-size: 14px;
+    margin-top: 10px;
+}

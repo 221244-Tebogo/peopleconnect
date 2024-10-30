@@ -1,51 +1,19 @@
-const LeaveRequest = require("../models/LeaveRequest");
-
-// Employee applies for leave
-const applyForLeave = async (req, res) => {
-  const { leaveType, startDate, endDate } = req.body;
+exports.createLeaveRequest = async (req, res) => {
+  const { startDate, endDate } = req.body;
 
   try {
-    const leaveRequest = new LeaveRequest({
+    const newLeave = new SickLeave({
       employee: req.user.id,
-      leaveType,
       startDate,
       endDate,
-      status: "Pending",
+      sickNote: "",
     });
 
-    await leaveRequest.save();
-    res.status(201).json(leaveRequest);
-  } catch (err) {
-    res.status(500).json({ error: "Failed to apply for leave" });
+    await newLeave.save();
+    res
+      .status(201)
+      .json({ message: "Leave request created successfully", newLeave });
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error });
   }
 };
-
-// Manager views leave requests
-const getLeaveRequests = async (req, res) => {
-  try {
-    const leaveRequests = await LeaveRequest.find().populate("employee");
-    res.json(leaveRequests);
-  } catch (err) {
-    res.status(500).json({ error: "Failed to fetch leave requests" });
-  }
-};
-
-// Manager approves leave
-const approveLeave = async (req, res) => {
-  const { id } = req.params;
-  const { status } = req.body;
-
-  try {
-    const leaveRequest = await LeaveRequest.findById(id);
-    if (!leaveRequest)
-      return res.status(404).json({ error: "Leave request not found" });
-
-    leaveRequest.status = status;
-    await leaveRequest.save();
-    res.json(leaveRequest);
-  } catch (err) {
-    res.status(500).json({ error: "Failed to update leave request" });
-  }
-};
-
-module.exports = { applyForLeave, getLeaveRequests, approveLeave };

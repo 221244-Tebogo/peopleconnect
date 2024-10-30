@@ -1,0 +1,40 @@
+.carousel {
+  position: relative;
+  width: 55%;
+  background-color: #ffe0d2;
+  padding: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  border-radius: 0 2rem 2rem 0;
+  transition: 0.8s ease-in-out;
+  overflow: hidden; /* Ensures images stay within the container */
+  height: 300px; /* Adjust height as needed for image fit */
+}
+
+.carousel-image {
+  position: absolute;
+  max-width: 200px;
+  border-radius: 50%;
+  opacity: 0;
+  animation: rotateImages 8s infinite;
+}
+
+/* Keyframes for rotation animation */
+@keyframes rotateImages {
+  0%, 50% {
+    opacity: 1;
+  }
+  25%, 75% {
+    opacity: 0;
+  }
+}
+
+/* Staggering animations for each image */
+.carousel-image:nth-child(1) {
+  animation-delay: 0s;
+}
+.carousel-image:nth-child(2) {
+  animation-delay: 4s;
+}

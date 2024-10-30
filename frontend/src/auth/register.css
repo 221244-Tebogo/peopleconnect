@@ -1,0 +1,111 @@
+/* Wrapper and background setup */
+.wrapper {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-image: '../assets/auth-1.png';
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.inner {
+    display: flex;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    width: 850px;
+}
+
+/* Form container styling */
+.form-container {
+    width: 50%;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.logo-container {
+    margin-bottom: 20px;
+}
+
+.onboarding-logo {
+    width: 150px;
+    height: auto;
+}
+
+/* Form styling */
+.form-group {
+    display: flex;
+    gap: 20px;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.form-wrapper {
+    width: 48%;
+}
+
+input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    font-size: 13px;
+}
+
+button {
+    padding: 12px;
+    width: 100%;
+    background: #ae3c33;
+    border: none;
+    color: #fff;
+    text-transform: uppercase;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+button:hover {
+    background: #f11a09;
+}
+
+.error {
+    color: #f11a09;
+    margin-top: 10px;
+    font-size: 14px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 991px) {
+    .inner {
+        width: 90%; /* Slightly narrower on medium screens */
+        flex-direction: column;
+    }
+    .form-container {
+        width: 100%; /* Form takes full width */
+        padding: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .wrapper {
+        background-image: none; /* Hide background on smaller screens for readability */
+    }
+    .inner {
+        width: 100%;
+    }
+    .form-group {
+        flex-direction: column;
+        gap: 10px; /* Reduce gap on smaller screens */
+    }
+    .form-wrapper {
+        width: 100%;
+    }
+}
