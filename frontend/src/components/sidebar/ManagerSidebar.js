@@ -22,9 +22,10 @@ const ManagerSidebar = () => {
         <Link to="/manager/leave-requests" className="link">
           Approve Leave
         </Link>
-        <Link to="/manager/scheduling" className="link">
+        <Link to="/manager/shift-schedule" className="link">
           Shift Scheduling
-        </Link>
+        </Link>{" "}
+        {/* Ensure this matches */}
         <Link to="/manager/reporting" className="link">
           Team Reports
         </Link>

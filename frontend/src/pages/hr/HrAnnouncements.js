@@ -8,12 +8,17 @@ const HrAnnouncements = () => {
 
   const handleAnnouncement = async (e) => {
     e.preventDefault();
-    const announcementData = { title, message };
     try {
-      await axios.post("/api/hr/announcements", announcementData, {
-        headers: { Authorization: localStorage.getItem("token") },
-      });
-      alert("Announcement created and posted on the What's New dashboard!");
+      await axios.post(
+        "http://localhost:5001/api/announcements/create",
+        { title, content: message },
+        {
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        }
+      );
+      alert("Announcement created successfully!");
+      setTitle("");
+      setMessage("");
     } catch (error) {
       console.error("Error creating announcement:", error);
     }

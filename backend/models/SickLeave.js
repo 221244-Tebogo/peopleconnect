@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const SickLeaveSchema = new mongoose.Schema({
   employee: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Employee", // Ensure this aligns with the actual name of your User model
+    ref: "Employee",
     required: true,
   },
   startDate: {

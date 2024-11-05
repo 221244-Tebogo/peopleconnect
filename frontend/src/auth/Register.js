@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
-import "./register.css"; // Link to the new CSS file
+import "./register.css";
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -11,8 +11,6 @@ const Register = () => {
     password: "",
     confirmPassword: "",
     userType: "",
-    gender: "",
-    dob: "",
   });
   const [error, setError] = useState("");
   const navigate = useNavigate();
@@ -28,16 +26,28 @@ const Register = () => {
       return;
     }
 
+    // Combine firstName and lastName into a single name field
+    const userData = {
+      name: `${formData.firstName} ${formData.lastName}`.trim(),
+      email: formData.email,
+      password: formData.password,
+      userType: formData.userType,
+    };
+
     try {
       const response = await axios.post(
-        "http://localhost:5001/api/register",
-        formData
+        "http://localhost:5001/api/users/register",
+        userData
       );
-      if (response.data.success) {
+      if (response.status === 201) {
         navigate("/login");
+      } else {
+        setError("Registration failed. Please try again.");
       }
     } catch (err) {
-      setError("Registration failed. Please try again.");
+      setError(
+        err.response?.data?.msg || "Registration failed. Please try again."
+      );
     }
   };
 
@@ -105,6 +115,20 @@ const Register = () => {
                 onChange={handleInputChange}
                 required
               />
+            </div>
+            <div className="form-group">
+              <label>User Type:</label>
+              <select
+                name="userType"
+                value={formData.userType}
+                onChange={handleInputChange}
+                required
+              >
+                <option value="">Select User Type</option>
+                <option value="hr">HR</option>
+                <option value="manager">Manager</option>
+                <option value="employee">Employee</option>
+              </select>
             </div>
             <button type="submit">Register</button>
           </form>

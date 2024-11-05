@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
-import "./login.css"; // Make sure login.css is updated with the styles from style.css in the zip
+import "./login.css";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -13,22 +13,25 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post("http://localhost:5001/api/login", {
-        email,
-        password,
-      });
-      const { userType, userId } = response.data;
+      const response = await axios.post(
+        "http://localhost:5001/api/users/login",
+        {
+          email,
+          password,
+        }
+      );
+      const { userType } = response.data;
 
       if (userType) {
         switch (userType) {
           case "hr":
-            navigate("/hr/dashboard");
+            navigate("/hr/HRMainDashboard");
             break;
           case "manager":
             navigate("/manager/dashboard");
             break;
           case "employee":
-            navigate("/employee/dashboard");
+            navigate("/employees/dashboard");
             break;
           default:
             setError("Invalid user type.");
@@ -37,6 +40,7 @@ const Login = () => {
         setError("Invalid login credentials.");
       }
     } catch (error) {
+      console.error("Login error:", error);
       setError("Login failed. Please try again.");
     }
   };

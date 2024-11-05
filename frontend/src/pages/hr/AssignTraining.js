@@ -14,21 +14,26 @@ const AssignTraining = ({ onClose, onSave, trainingToEdit }) => {
   const [selectedDates, setSelectedDates] = useState([null, null]);
 
   useEffect(() => {
-    // Fetch initial data for employees and training programs
-    const fetchEmployees = async () => {
-      setEmployees([
-        { id: 1, name: "John Doe" },
-        { id: 2, name: "Jane Smith" },
-      ]);
+    const fetchTrainingData = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:5001/api/trainings",
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
+        );
+        console.log("Fetched training data:", response.data);
+        // You can set this data in a state if needed to display on the page
+      } catch (error) {
+        console.error("Error fetching training data:", error);
+      }
     };
-    const fetchTrainingPrograms = async () => {
-      setTrainingPrograms([
-        { id: "customerService", name: "Customer Service Training" },
-        { id: "security", name: "Security Training" },
-      ]);
-    };
+
     fetchEmployees();
     fetchTrainingPrograms();
+    fetchTrainingData();
 
     if (trainingToEdit) {
       setTaskData(trainingToEdit);
@@ -64,10 +69,27 @@ const AssignTraining = ({ onClose, onSave, trainingToEdit }) => {
     setTaskData((prevData) => ({ ...prevData, sessions: updatedSessions }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    onSave(taskData);
-    onClose();
+
+    try {
+      const response = await axios.post(
+        "http://localhost:5001/api/trainings/assign",
+        taskData,
+        {
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        }
+      );
+
+      if (response.status === 201) {
+        alert("Training assigned successfully!");
+        onSave(response.data.training); // Optionally pass data to parent for state update
+        onClose();
+      }
+    } catch (error) {
+      console.error("Error assigning training:", error);
+      alert("Failed to assign training. Please try again.");
+    }
   };
 
   return (

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import ManagerSidebar from "../../components/sidebar/ManagerSidebar"; // Ensure correct import
+import ManagerSidebar from "../../components/sidebar/ManagerSidebar";
 
 const ManagerLeaveRequests = () => {
   const [leaveRequests] = useState([

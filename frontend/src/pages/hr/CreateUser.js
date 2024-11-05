@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "./HRAdminDashboard.css"; // Custom CSS for modal styling
+import "./HRAdminDashboard.css";
 
 const CreateUser = ({ onClose, onSave, userToEdit }) => {
   const [userData, setUserData] = useState({

@@ -1,35 +1,41 @@
 import React, { useState, useEffect } from "react";
+import EmployeeSidebar from "../../components/sidebar/EmployeeSidebar";
 import axios from "axios";
 
 const Announcements = () => {
   const [announcements, setAnnouncements] = useState([]);
 
   useEffect(() => {
-    axios
-      .get("/api/announcements")
-      .then((res) => setAnnouncements(res.data))
-      .catch((err) => console.log(err));
+    const fetchAnnouncements = async () => {
+      try {
+        const response = await axios.get("/api/announcements", {
+          headers: { Authorization: localStorage.getItem("token") },
+        });
+        setAnnouncements(response.data);
+      } catch (error) {
+        console.error("Error fetching announcements:", error);
+      }
+    };
+    fetchAnnouncements();
   }, []);
 
-  const handleNewAnnouncement = () => {
-    const message = prompt("Enter announcement messagcde:");
-    if (message) {
-      axios
-        .post("/api/announcements", { message })
-        .then(() => alert("Announcement created"))
-        .catch((err) => console.log(err));
-    }
-  };
-
   return (
-    <div className="announcements">
-      <h2>HR Announcements</h2>
-      <ul>
-        {announcements.map((announcement) => (
-          <li key={announcement._id}>{announcement.message}</li>
-        ))}
-      </ul>
-      <button onClick={handleNewAnnouncement}>Create New Announcement</button>
+    <div className="app-container">
+      <EmployeeSidebar />
+      <div className="main-content">
+        <h1>Announcements</h1>
+        <ul>
+          {announcements.map((announcement) => (
+            <li key={announcement.id}>
+              <h3>{announcement.title}</h3>
+              <p>{announcement.message}</p>
+              <p>
+                <strong>Date:</strong> {announcement.date}
+              </p>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 };
