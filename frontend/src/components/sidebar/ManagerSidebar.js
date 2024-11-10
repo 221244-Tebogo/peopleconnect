@@ -25,9 +25,11 @@ const ManagerSidebar = () => {
         <Link to="/manager/shift-schedule" className="link">
           Shift Scheduling
         </Link>{" "}
-        {/* Ensure this matches */}
         <Link to="/manager/reporting" className="link">
           Team Reports
+        </Link>
+        <Link to="/manager/taskmanagement" className="link">
+          Task Management
         </Link>
         <Link to="/manager/profile" className="link">
           My Profile

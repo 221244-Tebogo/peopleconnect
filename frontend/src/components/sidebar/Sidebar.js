@@ -31,6 +31,11 @@ const Sidebar = () => {
         <Link to="/announcements" className="link">
           Announcements
         </Link>
+
+        <Link to="/tasks" className="link">
+          Tasks
+        </Link>
+
         <button onClick={handleLogout} className="logout-btn">
           Logout
         </button>

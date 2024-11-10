@@ -1,17 +1,17 @@
 const mongoose = require("mongoose");
 
-const TrainingSchema = new mongoose.Schema({
-  employee: { type: String, required: true },
-  trainingTask: { type: String, required: true },
-  sessions: [
-    {
-      date: { type: String, required: true },
-      startTime: { type: String, required: true },
-      endTime: { type: String, required: true },
-    },
-  ],
-  assignedBy: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
-  createdAt: { type: Date, default: Date.now },
+const trainingSchema = new mongoose.Schema({
+  title: {
+    type: String,
+    required: true,
+  },
+  description: {
+    type: String,
+  },
+  date: {
+    type: Date,
+    required: true,
+  },
 });
 
-module.exports = mongoose.model("Training", TrainingSchema);
+module.exports = mongoose.model("Training", trainingSchema);

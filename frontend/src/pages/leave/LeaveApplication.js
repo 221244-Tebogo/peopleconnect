@@ -1,6 +1,7 @@
+//pages/LeaveApplication
 import React, { useState } from "react";
 import Calendar from "react-calendar";
-import "react-calendar/dist/Calendar.css"; // Import default styles
+import "react-calendar/dist/Calendar.css";
 import axios from "axios";
 import "./LeaveApplication.css";
 
@@ -9,21 +10,24 @@ const LeaveApplication = ({ user }) => {
   const [leaveType, setLeaveType] = useState("");
 
   const handleDateChange = (date) => {
-    setSelectedDates(date); // Date will be updated when the user selects it on the calendar
+    setSelectedDates(date);
   };
 
   const handleLeaveRequest = (e) => {
     e.preventDefault();
 
     const leaveRequest = {
-      leaveType: leaveType,
-      startDate: selectedDates[0], // Assuming it's a range of dates
-      endDate: selectedDates[1],
+      leaveType,
+      startDate: Array.isArray(selectedDates)
+        ? selectedDates[0]
+        : selectedDates,
+      endDate: Array.isArray(selectedDates) ? selectedDates[1] : selectedDates,
     };
 
     axios
-      .post("/api/employees/apply-leave", leaveRequest, {
-        headers: { Authorization: localStorage.getItem("token") },
+      .post("/api/leaves/apply", leaveRequest, {
+        // headers: { Authorization: localStorage.getItem("token") },
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       })
       .then(() => alert("Leave requested successfully"))
       .catch((err) => console.log(err));

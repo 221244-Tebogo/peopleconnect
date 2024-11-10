@@ -1,0 +1,31 @@
+/*ORIGINAL AUTH CSS CODE*/
+/* src/auth/AuthPage.css */
+
+.auth-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.auth-toggle {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.auth-toggle button {
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.auth-toggle .active {
+  color: white;
+  background-color: #007bff;
+}
+
+.auth-form {
+  width: 100%;
+  max-width: 400px;
+}

@@ -1,3 +1,4 @@
+//models/sickleave
 const mongoose = require("mongoose");
 
 const SickLeaveSchema = new mongoose.Schema({

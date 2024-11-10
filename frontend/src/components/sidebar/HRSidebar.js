@@ -29,7 +29,7 @@ const HRSidebar = () => {
           Training
         </Link>
         <Link to="/hr/HRMainDashboard/profile" className="link">
-          My Profile
+          Profile
         </Link>
         <Link to="/hr/HRMainDashboard/career" className="link">
           Career
