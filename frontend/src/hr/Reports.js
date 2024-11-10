@@ -20,7 +20,7 @@ ChartJS.register(
   Legend
 );
 
-const HRReporting = () => {
+const Reports = () => {
   // Data for each report
   const reportData = [
     { label: "Total Employees", value: 250 },
@@ -102,4 +102,4 @@ const HRReporting = () => {
   );
 };
 
-export default HRReporting;
+export default Reports;

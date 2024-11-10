@@ -32,9 +32,9 @@ import LeaveForm from "./hr/LeaveForm";
 import SickLeaveForm from "./hr/SickLeaveForm";
 import HrAnnouncements from "./hr/HrAnnouncements";
 import HrCareer from "./hr/HrCareer";
-import HrProfile from "./hr/HrProfile";
+import HrProfile from "./hr/Profile"; // Correct import for HrProfile
 import HrRecruitment from "./hr/HrRecruitment";
-import HrReporting from "./hr/HrReporting";
+import HrReporting from "./hr/Reports"; // Correct import for HrReporting
 import HrTraining from "./hr/HrTraining";
 import CreateUser from "./hr/CreateUser";
 import AssignTraining from "./hr/AssignTraining";
@@ -53,7 +53,6 @@ const App = () => {
         <Routes>
           {/* Combined Auth Page */}
           <Route path="/" element={<Authentication />} />
-
           {/* Employee Routes */}
           <Route path="/employees/dashboard" element={<Dashboard />} />
           <Route
@@ -66,7 +65,6 @@ const App = () => {
           <Route path="/employees/training" element={<Training />} />
           <Route path="/employees/announcements" element={<Announcements />} />
           <Route path="/employees/career" element={<Career />} />
-
           {/* Manager Routes */}
           <Route path="/manager/dashboard" element={<ManagerDashboard />} />
           <Route
@@ -81,23 +79,23 @@ const App = () => {
           <Route path="/manager/profile" element={<ManagerProfile />} />
           <Route path="/manager/taskmanagement" element={<ManagerTaskList />} />
           <Route path="/manager/career" element={<ManagerCareer />} />
-
           {/* HR Routes */}
           <Route path="/hr/AdminDashboard" element={<AdminDashboard />} />
           <Route path="/hr/createpost" element={<CreatePost />} />
           <Route path="/hr/leaveform" element={<LeaveForm />} />
           <Route path="/hr/sickleaveform" element={<SickLeaveForm />} />
           <Route path="/hr/announcements" element={<HrAnnouncements />} />
-          <Route path="/hr/reporting" element={<HrReporting />} />
+          <Route path="/hr/reports" element={<HrReporting />} />{" "}
+          {/* Correct component */}
           <Route path="/hr/recruitment" element={<HrRecruitment />} />
           <Route path="/hr/training" element={<HrTraining />} />
           <Route path="/hr/career" element={<HrCareer />} />
-          <Route path="/hr/profile" element={<HrProfile />} />
+          <Route path="/hr/profile" element={<HrProfile />} />{" "}
+          {/* Correct component */}
           <Route path="/hr/createuser" element={<CreateUser />} />
           <Route path="/hr/assigntraining" element={<AssignTraining />} />
           <Route path="/hr/employeelist" element={<EmployeeList />} />
           <Route path="/hr/manageleave" element={<ManageLeave />} />
-
           {/* 404 Route */}
           <Route path="*" element={<NotFound />} />
         </Routes>

@@ -1,7 +1,8 @@
+//src/hr/Profile
 import React, { useState, useEffect } from "react";
 import HRSidebar from "../components/sidebar/HRSidebar";
 
-const HRProfile = () => {
+const Profile = () => {
   const [user, setUser] = useState({
     firstName: "John",
     lastName: "Doe",
@@ -105,4 +106,4 @@ const HRProfile = () => {
   );
 };
 
-export default HRProfile;
+export default Profile;

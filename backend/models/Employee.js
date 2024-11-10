@@ -1,4 +1,4 @@
-//modes/Employee
+//models/Employee
 const mongoose = require("mongoose");
 
 const employeeSchema = new mongoose.Schema(

@@ -73,6 +73,19 @@ router.get("/user/:user_id", auth, async (req, res) => {
   }
 });
 
+// Get all employees
+router.get("/", auth, async (req, res) => {
+  try {
+    const employees = await User.find({ role: "employee" }).select(
+      "name surname email"
+    );
+    res.status(200).json(employees);
+  } catch (err) {
+    console.error("Error fetching employees:", err.message);
+    res.status(500).json({ message: "Error fetching employees" });
+  }
+});
+
 // Add a comment to a profile
 router.post("/comment/:user_id", auth, async (req, res) => {
   const { comment } = req.body;
