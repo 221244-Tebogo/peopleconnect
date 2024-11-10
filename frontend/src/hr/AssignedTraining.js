@@ -17,6 +17,7 @@ const AssignedTraining = () => {
             headers: { Authorization: `Bearer ${token}` },
           }
         );
+        console.log("Assignments fetched:", response.data); // Add this line to check data format
         setAssignments(response.data);
       } catch (err) {
         console.error("Error fetching assignments:", err);

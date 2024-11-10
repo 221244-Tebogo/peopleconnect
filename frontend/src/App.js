@@ -86,12 +86,10 @@ const App = () => {
           <Route path="/hr/sickleaveform" element={<SickLeaveForm />} />
           <Route path="/hr/announcements" element={<HrAnnouncements />} />
           <Route path="/hr/reports" element={<HrReporting />} />{" "}
-          {/* Correct component */}
           <Route path="/hr/recruitment" element={<HrRecruitment />} />
           <Route path="/hr/training" element={<HrTraining />} />
           <Route path="/hr/career" element={<HrCareer />} />
           <Route path="/hr/profile" element={<HrProfile />} />{" "}
-          {/* Correct component */}
           <Route path="/hr/createuser" element={<CreateUser />} />
           <Route path="/hr/assigntraining" element={<AssignTraining />} />
           <Route path="/hr/employeelist" element={<EmployeeList />} />

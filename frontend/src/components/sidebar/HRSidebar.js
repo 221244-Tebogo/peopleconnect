@@ -26,10 +26,11 @@ const HRSidebar = () => {
         <Link to="/hr/reports" className="link">
           <i className="fa fa-chart-line" aria-hidden="true"></i> Reports
         </Link>
-        <Link to="/hr/AssignTraining" className="link">
+        <Link to="/hr/training" className="link">
           <i className="fa fa-chalkboard-teacher" aria-hidden="true"></i>{" "}
           Training
         </Link>
+
         <Link to="/hr/profile" className="link">
           <i className="fa fa-user" aria-hidden="true"></i> Profile
         </Link>
