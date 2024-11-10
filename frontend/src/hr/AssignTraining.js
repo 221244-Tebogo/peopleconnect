@@ -68,7 +68,6 @@ const AssignTraining = ({ onClose, onSave, trainingToEdit }) => {
     );
     setTaskData((prevData) => ({ ...prevData, sessions: updatedSessions }));
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -82,7 +81,7 @@ const AssignTraining = ({ onClose, onSave, trainingToEdit }) => {
       );
       if (response.status === 201) {
         alert("Training assigned successfully!");
-        onSave(response.data.training);
+        onSave(response.data.assignment);
         onClose();
       }
     } catch (error) {
@@ -90,8 +89,6 @@ const AssignTraining = ({ onClose, onSave, trainingToEdit }) => {
       alert("Failed to assign training. Please try again.");
     }
   };
-
-  if (error) return <div>{error}</div>;
 
   return (
     <div className="modal-overlay">

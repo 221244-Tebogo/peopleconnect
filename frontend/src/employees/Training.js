@@ -1,4 +1,4 @@
-// src/pages/employees/Training.js
+// src/employees/Training.js
 import React from "react";
 import EmployeeSidebar from "../components/sidebar/EmployeeSidebar";
 
