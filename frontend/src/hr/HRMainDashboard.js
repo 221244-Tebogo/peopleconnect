@@ -1,7 +1,7 @@
 import React from "react";
 import { Outlet, Link } from "react-router-dom";
 import HRSidebar from "../components/sidebar/HRSidebar";
-import "./HRAdminDashboard.css";
+import "./AdminDashboard.css";
 
 const HRMainDashboard = ({ user }) => {
   return (

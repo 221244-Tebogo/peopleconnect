@@ -4,7 +4,7 @@ import axios from "axios";
 import DatePicker from "react-datepicker";
 import HRSidebar from "../components/sidebar/HRSidebar";
 import "react-datepicker/dist/react-datepicker.css";
-import "./HRAdminDashboard.css";
+import "./AdminDashboard.css";
 
 const ManageLeave = () => {
   const [leaveRequests, setLeaveRequests] = useState([]);

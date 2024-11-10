@@ -26,7 +26,7 @@ import ManagerProfile from "./manager/ManagerProfile";
 import ManagerCareer from "./manager/ManagerCareer";
 
 // HR Pages
-import HRAdminDashboard from "./hr/HRAdminDashboard";
+import AdminDashboard from "./hr/AdminDashboard";
 import CreatePost from "./hr/CreatePost";
 import LeaveForm from "./hr/LeaveForm";
 import SickLeaveForm from "./hr/SickLeaveForm";
@@ -83,7 +83,7 @@ const App = () => {
           <Route path="/manager/career" element={<ManagerCareer />} />
 
           {/* HR Routes */}
-          <Route path="/hr/dashboard" element={<HRAdminDashboard />} />
+          <Route path="/hr/AdminDashboard" element={<AdminDashboard />} />
           <Route path="/hr/createpost" element={<CreatePost />} />
           <Route path="/hr/leaveform" element={<LeaveForm />} />
           <Route path="/hr/sickleaveform" element={<SickLeaveForm />} />

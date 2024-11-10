@@ -115,22 +115,3 @@ router.post("/connect/:user_id", auth, async (req, res) => {
 });
 
 module.exports = router;
-
-// routes/employeeRoutes.js
-// const express = require("express");
-// const router = express.Router();
-// const auth = require("../middleware/auth");
-// const { hrAuth } = require("../middleware/roleMiddleware");
-// const Employee = require("../models/Employee");
-
-// router.get("/", auth, hrAuth, async (req, res) => {
-//   try {
-//     const employees = await Employee.find().select("-password"); // Exclude password field
-//     res.status(200).json(employees);
-//   } catch (error) {
-//     console.error("Error fetching employees:", error);
-//     res.status(500).json({ message: "Error fetching employees", error });
-//   }
-// });
-
-// module.exports = router;

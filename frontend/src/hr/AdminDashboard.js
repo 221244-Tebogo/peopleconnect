@@ -1,10 +1,10 @@
-// frontend/pages/hr/HRAdminDashboard.js
+// frontend/src/hr/AdminDashboard.js
 
 import React from "react";
-import { Link } from "react-router-dom"; // Import Link here
+import { Link } from "react-router-dom";
 import HRSidebar from "../components/sidebar/HRSidebar";
 
-const HRAdminDashboard = () => {
+const AdminDashboard = () => {
   return (
     <div className="app-container">
       <HRSidebar />
@@ -28,4 +28,4 @@ const HRAdminDashboard = () => {
   );
 };
 
-export default HRAdminDashboard;
+export default AdminDashboard;

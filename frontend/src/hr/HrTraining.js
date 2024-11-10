@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import HRSidebar from "../components/sidebar/HRSidebar";
 import AssignTraining from "./AssignTraining";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "./HRAdminDashboard.css";
+import "./AdminDashboard.css";
 
 const HRTraining = () => {
   const [assignedTrainings, setAssignedTrainings] = useState([]);

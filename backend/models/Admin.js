@@ -1,7 +1,5 @@
 // //backend/models/Admin.js
-// backend/models/Admin.js
 const mongoose = require("mongoose");
-
 const adminSchema = new mongoose.Schema({
   name: { type: String, required: true },
   surname: { type: String, required: true },

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import HRSidebar from "../components/sidebar/HRSidebar";
-import "./HRAdminDashboard.css";
+import "./AdminDashboard.css";
 
 const HrCareer = () => {
   const [positions, setPositions] = useState([]);
